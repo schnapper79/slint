@@ -424,8 +424,10 @@ fn process_window_event(
                     location.y - window_pos.y as f64,
                 )
             };
-            let location = location.to_logical(runtime_window.scale_factor() as f64);
-            let position = euclid::point2(location.x, location.y);
+            let mut location = location.to_logical(runtime_window.scale_factor() as f64);
+            location.x=location.x*(600./1024.);
+            location.y=location.y*(1024./600.);
+            let position = euclid::point2(location.x, location.y); //switched here
             let ev = match touch.phase {
                 winit::event::TouchPhase::Started => {
                     *pressed = true;

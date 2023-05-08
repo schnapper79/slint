@@ -87,11 +87,17 @@ impl FemtoVGRenderer {
             }
         };
 
-        let femtovg_canvas = femtovg::Canvas::new_with_text_context(
+        let mut femtovg_canvas = femtovg::Canvas::new_with_text_context(
             gl_renderer,
             self::fonts::FONT_CACHE.with(|cache| cache.borrow().text_context.clone()),
         )
         .unwrap();
+
+        femtovg_canvas.rotate(4.71239); //rotate 270 degrees
+        femtovg_canvas.translate(-600., 0.0); //translate back to screen
+
+        //femtovg_canvas.set_size(h as u32,w as u32,1.);
+
         let femtovg_canvas = Rc::new(RefCell::new(femtovg_canvas));
         let canvas = FemtoVGCanvas {
             canvas: femtovg_canvas,
